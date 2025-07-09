@@ -23,13 +23,13 @@ async function runQueryExamples() {
   try {
     //create a new document
 
-    // const newUser = await User.create({
-    //   name: "Hein Htet",
-    //   email: "heinhtet00@gmail.com",
-    //   age: 25,
-    //   isActive: true,
-    //   tags: ["clone", "fake", "unreal"],
-    // });
+    const newUser = await User.create({
+      name: "Hein Htet 1123",
+      email: "heinhtet03@gmail.com",
+      age: 335,
+      isActive: true,
+      tags: ["clone", "fake"],
+    });
 
     // const newUser = new User({
     //   name: "Hein Htet 01",
@@ -41,12 +41,28 @@ async function runQueryExamples() {
 
     // await newUser.save();
 
-    const allUsers = await User.find({
-      name: "Hein Htet",
-    });
-    console.log(allUsers);
+    // const allUsers = await User.find({
+    //   name: "Hein Htet",
+    // });
+    // console.log(allUsers);
 
-    // console.log("created new user successfully", newUser);
+    console.log("created new user successfully", newUser);
+
+    //select
+    // const getSelectedUser = await User.find().select("name email -_id");
+    // console.log(getSelectedUser);
+
+    const updateUser = await User.findByIdAndUpdate(
+      newUser._id,
+      {
+        $set: { age: 100 },
+        $push: { tags: "updated" },
+      },
+      { new: true }
+    );
+    console.log(updateUser);
+
+    // count, select, delete, find the first one, find with type
   } catch (e) {
     console.log("Error ->" + e);
   } finally {
