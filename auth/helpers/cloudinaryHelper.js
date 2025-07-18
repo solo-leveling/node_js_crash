@@ -5,8 +5,8 @@ const uploadToCloudinary = async (filePath) => {
     const result = await cloudinary.uploader.upload(filePath);
 
     return {
-      url: result.url,
-      publicId: result.publicId,
+      url: result.secure_url,
+      publicId: result.public_id, // <-- keys name (never change)
     };
   } catch (e) {
     console.error("Can't upload on Cloudinary", e);
