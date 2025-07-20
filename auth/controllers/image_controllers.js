@@ -22,7 +22,7 @@ const uploadImageController = async (req, res) => {
     });
 
     //delete the file from the local storage
-    fs.unlinkSync(req.file.path);
+    // fs.unlinkSync(req.file.path);
 
     await newlyUploadedImage.save();
 
