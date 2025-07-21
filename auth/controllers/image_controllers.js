@@ -58,4 +58,15 @@ const fetchImageController = async (req, res) => {
   }
 };
 
+const deleteImageController = async (req, res) => {
+  try {
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong with deleting images.",
+    });
+  }
+};
+
 module.exports = { uploadImageController, fetchImageController };
