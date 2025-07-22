@@ -1,6 +1,8 @@
 const Image = require("../models/Image");
 const { uploadToCloudinary } = require("../helpers/cloudinaryHelper");
 const fs = require("fs");
+const User = require("../models/User");
+const imaginary = require("../config/cloudinary");
 
 const uploadImageController = async (req, res) => {
   try {
@@ -60,6 +62,38 @@ const fetchImageController = async (req, res) => {
 
 const deleteImageController = async (req, res) => {
   try {
+    //selecting current image id
+    const currentIdOfImage = req.params.id;
+    const userId = req.userInfo.userId;
+    const image = await Image.findById(currentIdOfImage);
+    if (!image) {
+      return res.status(404).json({
+        success: false,
+        message: "Image can't find",
+      });
+    }
+
+    //check the current user is trying to delete image or not
+    if (image.uploadedBy.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: "You can't delete other ppl image.",
+      });
+    }
+
+    //delete image from imaginary
+    await imaginary.uploader.destroy(image.publicId);
+
+    //delete image from folder
+    await Image.findByIdAndDelete(currentIdOfImage);
+
+    //delete the file from the local storage
+    // fs.unlinkSync(req.file.path);
+
+    res.status(200).json({
+      success: true,
+      message: "Image deleted successfully.",
+    });
   } catch (e) {
     console.log(e);
     res.status(500).json({
@@ -69,4 +103,8 @@ const deleteImageController = async (req, res) => {
   }
 };
 
-module.exports = { uploadImageController, fetchImageController };
+module.exports = {
+  uploadImageController,
+  fetchImageController,
+  deleteImageController,
+};
