@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const productRoutes = require("./routes/product_route");
 
 // connect to mongoose DB
 mongoose
@@ -11,6 +12,9 @@ mongoose
 
 //use middlewares
 app.use(express.json());
+
+//connect routes
+app.use("/product", productRoutes);
 
 //port
 const Port = process.env.PORT;
