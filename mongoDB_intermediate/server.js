@@ -14,7 +14,7 @@ mongoose
 app.use(express.json());
 
 //connect routes
-app.use("/product", productRoutes);
+app.use("/products", productRoutes);
 
 //port
 const Port = process.env.PORT;

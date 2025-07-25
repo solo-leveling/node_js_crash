@@ -39,9 +39,7 @@ const insertData = async (req, res) => {
         tags: ["paper", "school", "office", "writing"],
       },
     ];
-
     const result = await Product.insertMany(data);
-
     res.status(201).json({
       success: true,
       message: `Inserted ${result.length} data.`,
@@ -55,4 +53,30 @@ const insertData = async (req, res) => {
   }
 };
 
-module.exports = { insertData };
+const getProductStats = async (req, res) => {
+  try {
+    const result = await Product.aggregate([
+      {
+        $match: {
+          price: {
+            $gte: 20,
+          },
+          inStock: true,
+        },
+      },
+    ]);
+
+    res.status(201).json({
+      success: true,
+      data: result,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(404).json({
+      success: false,
+      message: "Can't find Products",
+    });
+  }
+};
+
+module.exports = { insertData, getProductStats };
