@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const productRoutes = require("./routes/product_route");
+const bookRoutes = require("./routes/book_route");
 
 // connect to mongoose DB
 mongoose
@@ -15,6 +16,7 @@ app.use(express.json());
 
 //connect routes
 app.use("/products", productRoutes);
+app.use("/reference", bookRoutes);
 
 //port
 const Port = process.env.PORT;
