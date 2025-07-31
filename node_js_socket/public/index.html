@@ -40,6 +40,10 @@
         addMessage(`${user} has joined.`);
     });
 
+    socket.on("userList", (users)=>{
+        usersList.innerHTML = users.map(user => `<li>${user}</li>`)
+    })
+
     // Function to add a message to the chat box
     function addMessage(input) {
         const messageElement = document.createElement("div"); // Create a new div
