@@ -41,7 +41,7 @@
     });
 
     socket.on("userList", (users)=>{
-        usersList.innerHTML = users.map(user => `<li>${user}</li>`)
+        usersList.innerHTML = users.map(user => `<li>${user}</li>`).join("")
     })
 
     // Function to add a message to the chat box
