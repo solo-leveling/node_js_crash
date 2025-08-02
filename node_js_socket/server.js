@@ -33,6 +33,11 @@ io.on("connection", (socket) => {
     // Send the updated list of users to all connected clients
     io.emit("userList", Array.from(users));
   });
+
+  //handle incoming messages
+  socket.on("chatMessage", (message) => {
+    io.emit("chatMessage", message);
+  });
 });
 
 // Define the server port

@@ -44,6 +44,27 @@
         usersList.innerHTML = users.map(user => `<li>${user}</li>`).join("")
     })
 
+    //listen message from server
+    socket.on("chatMessage", (message)=>{
+        addMessage(`${message.userName}: ${message.text}`)
+    })
+
+    //handle for submit
+    messageForm.addEventListener('submit', (event)=>{
+        event.preventDefault();
+
+        const extractMessageText = message.value.trim();
+
+        if(extractMessageText){
+            socket.emit("chatMessage", {
+                userName,
+                text: extractMessageText
+            })
+
+            message.value = ""
+        }
+    })
+
     // Function to add a message to the chat box
     function addMessage(input) {
         const messageElement = document.createElement("div"); // Create a new div
