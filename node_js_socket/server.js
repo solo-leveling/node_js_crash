@@ -38,6 +38,20 @@ io.on("connection", (socket) => {
   socket.on("chatMessage", (message) => {
     io.emit("chatMessage", message);
   });
+
+  //disconnect user
+  socket.on("disconnect", () => {
+    console.log("An user is disconnected");
+
+    users.forEach((user) => {
+      if (user === socket.userName) {
+        users.delete(user);
+
+        io.emit("userLeft", user);
+        io.emit("userList", Array.from(users));
+      }
+    });
+  });
 });
 
 // Define the server port
