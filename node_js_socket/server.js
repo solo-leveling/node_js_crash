@@ -26,6 +26,7 @@ io.on("connection", (socket) => {
   socket.on("join", (userName) => {
     // Add the username to the set of users
     users.add(userName);
+    socket.userName = userName;
 
     // Notify all clients that a new user has joined
     io.emit("userJoined", userName);
